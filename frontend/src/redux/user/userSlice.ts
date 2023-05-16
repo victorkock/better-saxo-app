@@ -4,7 +4,8 @@ import { AppDispatch } from '../store';
 // Define a type for the slice state
 interface UserState {
   name: string,
-  id: string
+  userId: string,
+  clientKey: string,
 }
 
 const client = new FetchAPIClient();
@@ -12,7 +13,8 @@ const client = new FetchAPIClient();
 // Define the initial state using that type
 const initialState: UserState = {
   name: '',
-  id: ''
+  userId: '',
+  clientKey: '',
 }
 
 export const userSlice = createSlice({
@@ -21,8 +23,9 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state: UserState, action: PayloadAction<UserState>) => {
       return { 
-        id: action.payload.id,
+        userId: action.payload.userId,
         name: action.payload.name,
+        clientKey: action.payload.clientKey,
       }
     }
   },
@@ -32,8 +35,9 @@ export const fetchUser = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await client.get<any>('users/me');
     const user: UserState = {
-      id: response.UserId,
+      userId: response.UserId,
       name: response.Name,
+      clientKey: response.ClientId
     };
     dispatch(setUser(user));
   } catch (error) {

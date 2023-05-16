@@ -13,6 +13,7 @@ import './index.css';
 import App from './App';
 import Login from './components/login/Login';
 import User from './components/user/User';
+import AccountList from './components/account/AccountList'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
       {
         path: "/user",
         element: <User/>,
+        children: [],
+      },
+      {
+        path: "/account",
+        element: <AccountList/>,
         children: [],
       }
     ],

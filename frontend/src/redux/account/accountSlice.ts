@@ -1,34 +1,56 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
+import { FetchAPIClient } from "./../../api/Client"
+import { AppDispatch } from '../store';
+import Account from '../../components/account/AccountList';
+
+// Include Lodash functions
+var _ = require("lodash");
+
+// Create client
+const client = new FetchAPIClient();
+
+export interface Account {
+  accountId: string
+  accountKey: string
+}
 
 // Define a type for the slice state
 interface AccountState {
-  value: number
+  accounts: Account[]
 }
 
 // Define the initial state using that type
 const initialState: AccountState = {
-  value: 0,
+  accounts: []
 }
 
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    setAccounts: (state, action: PayloadAction<Account[]>) => {
+      return {
+        accounts: action.payload
+      }
     },
   },
 })
 
-export const { increment, decrement, incrementByAmount } = accountSlice.actions
+export const fetchAccounts = (): any => async (dispatch: AppDispatch) => {
+  try {
+    const response = await client.get<any>('accounts/me');
+    const accounts: Account[] = response.Data.map((a : any) => {
+      return {
+        accountId: a.AccountId,
+        accountKey: a.AccountKey,
+      } as Account;
+    });
+    dispatch(setAccounts(accounts));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-export const selectCount = (state: RootState) => state.account.value
+export const { setAccounts } = accountSlice.actions
 
 export default accountSlice.reducer
