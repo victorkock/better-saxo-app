@@ -6,7 +6,7 @@ import { fetchUser } from "../../redux/user/userSlice";
 
 const Header = (props: any) => {
     const dispatch = useAppDispatch();
-
+    
     useEffect(() => {
 		dispatch(fetchUser())
 	}, [dispatch]);
