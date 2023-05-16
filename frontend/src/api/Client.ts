@@ -1,4 +1,3 @@
-
 const baseUrl = 'https://gateway.saxobank.com/sim/openapi/port/v1/';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
@@ -7,27 +6,21 @@ type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
 const setHeaders = (token: string): RequestInit => {
   return {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `BEARER ${token}`,
       'Content-Type': 'application/json',
+      'Accept': '*/*',
     },
   };
 };
 
-class FetchAPIClient {
-  private baseUrl: string;
-  private token: string;
-
-  constructor(baseUrl: string, token: string) {
-    this.baseUrl = baseUrl;
-    this.token = token;
-  }
+export class FetchAPIClient {
 
   private async request<T>(method: HttpMethod, url: string, data?: any): Promise<T> {
-    const requestUrl = `${this.baseUrl}${url}`;
+    const requestUrl = `${baseUrl}${url}`;
 
     const requestOptions: RequestInit = {
       method,
-      ...setHeaders(this.token),
+      ...setHeaders(process.env.REACT_APP_API_KEY!),
       body: data ? JSON.stringify(data) : undefined,
     };
 

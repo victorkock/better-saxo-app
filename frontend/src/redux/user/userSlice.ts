@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
+import { createSlice } from '@reduxjs/toolkit'
+import { FetchAPIClient } from "./../../api/Client"
 // Define a type for the slice state
 interface UserState {
   name: string,
   id: string
 }
+
+const client = new FetchAPIClient();
 
 // Define the initial state using that type
 const initialState: UserState = {
@@ -17,8 +19,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     fetchUser: (state) => {
-      state.name = 'Magnus'
-      state.id = 'bip bop'
+      client.get<any>("users/me")
+      .then((response) => {
+        
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   },
 })
