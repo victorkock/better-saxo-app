@@ -5,12 +5,12 @@ import Header from './components/navigation/Header';
 
 const App = () => {
   return (
-    <>
+    <div className='w-full h-full	text-slate-100'>
       <Header />
-      <div className='flex bg-slate-600'>
+      <div className='w-full h-full bg-slate-800 flex flex-col justify-center items-center'>
         <Outlet />
       </div>
-    </>
+    </div>
   );
 }
 
