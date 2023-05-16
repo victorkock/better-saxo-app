@@ -1,11 +1,7 @@
-import React from "react";
 import { connect } from "react-redux";
-import { useAppDispatch } from "../../redux/hooks";
-import { fetchUser } from "../../redux/user/userSlice";
 import image from '../../assets/image.png'
 
 const User = (props: any) => {
-    const dispatch = useAppDispatch();
 
     return (
         <div className="w-1/2 p-2 bg-slate-300 text-slate-900 rounded-md flex justify-between">
