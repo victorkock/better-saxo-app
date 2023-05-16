@@ -7,23 +7,15 @@ import { Navigate } from "react-router-dom";
 const Login = (props: any) => {
     const dispatch = useAppDispatch();
 
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
+    const login = () => {
         dispatch(authorize(""));
+        localStorage.setItem('loggedIn', 'true')
+
     };
 
-    const login = (
-        <form onSubmit={handleSubmit}>
-            <input id="userpassword" type="password" placeholder="Password" />
-            <input type="submit" />
-        </form>
-    );
-
-    return (
-        <>
-            {props.isAuthorized ? <Navigate to="/"></Navigate> : login}
-        </>
-    );
+    return props.isAuthorized 
+        ? <Navigate to="/"></Navigate> 
+        : <button className="inline-flex justify-center rounded-md text-lg font-semibold py-3 px-4 bg-sky-900 hover:bg-slate-700" onClick={login}>LOG IND</button>;
 }
 
 const mapStateToProps = (state: any) => {
