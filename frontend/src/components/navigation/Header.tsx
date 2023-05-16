@@ -6,10 +6,10 @@ import { fetchUser } from "../../redux/user/userSlice";
 
 const Header = (props: any) => {
     const dispatch = useAppDispatch();
-
+    
     useEffect(() => {
 		dispatch(fetchUser())
-	}, []);
+	}, [dispatch]);
 
     return (
         <div className="header w-full bg-slate-900 flex justify-between px-3 font-semibold">
