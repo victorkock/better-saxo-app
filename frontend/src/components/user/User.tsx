@@ -2,15 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { useAppDispatch } from "../../redux/hooks";
 import { fetchUser } from "../../redux/user/userSlice";
+import image from '../../assets/image.png'
 
 const User = (props: any) => {
     const dispatch = useAppDispatch();
 
     return (
-        <div>
-            <h1>{props.user.name}</h1>
-            <p>{props.user.id}</p>
-            <button onClick={() => dispatch(fetchUser(props.state))}>Click to fetch user :-)!</button>
+        <div className="w-1/2 p-2 bg-slate-300 text-slate-900 rounded-md flex justify-between">
+            <div className="w-1/4 flex flex-col">
+                <h1 className="text-lg">{props.user.name}</h1>
+                <h2 className="text-sm">{props.user.id}</h2>
+            </div>
+            <img src={image} alt="Logo" />
         </div>
     );
 }
