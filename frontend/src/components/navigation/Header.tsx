@@ -9,7 +9,7 @@ const Header = (props: any) => {
 
     useEffect(() => {
 		dispatch(fetchUser())
-	}, []);
+	}, [dispatch]);
 
     return (
         <div className="header w-full bg-slate-900 flex justify-between px-3 font-semibold">
