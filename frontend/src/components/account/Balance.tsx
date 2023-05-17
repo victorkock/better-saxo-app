@@ -24,7 +24,8 @@ const Balance = (props: any) => {
     };
 
     const addFunds = () => {
-        dispatch(putNewBalance(amount, accountKey));
+        dispatch(putNewBalance(amount + props.balance.cashBalance, accountKey));
+        handleToggleBalance();
     };
 
     const currentBalance = (

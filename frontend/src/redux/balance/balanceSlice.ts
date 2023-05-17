@@ -34,7 +34,7 @@ export const balanceSlice = createSlice({
 
 export const fetchBalance = (): any => async (dispatch: AppDispatch) => {
     try {
-      const response = await client.get<any>('balances/me');
+      const response = await client.get<any>('port/v1/balances/me');
       const balance: BalanceState = {
         cashBalance: response.CashBalance,
         totalValue: response.TotalValue,
