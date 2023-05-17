@@ -29,6 +29,12 @@ export class FetchAPIClient {
       if (!response.ok) {
         throw new Error('An error occurred');
       }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        return {} as T;
+      }
+
       const responseData: T = await response.json();
       return responseData;
     } catch (error: any) {

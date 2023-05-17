@@ -68,8 +68,10 @@ export const fetchAccounts = (): any => async (dispatch: AppDispatch) => {
 
 export const putNewBalance = (amount: number, accountKey: string): any => async (dispatch: AppDispatch) => {
   try {
-    await client.put<any>(`port/v1/accounts/${accountKey}/reset`, {NewBalance: amount});
-    dispatch(fetchBalance())
+    client.put<any>(`port/v1/accounts/${accountKey}/reset`, {NewBalance: amount})
+    .then(() => {
+      dispatch(fetchBalance());
+    });
   } catch (error) {
     console.error(error);
   }

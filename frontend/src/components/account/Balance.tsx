@@ -1,13 +1,12 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
+import { ChangeEvent, useState } from "react";
 import { putNewBalance } from "../../redux/account/accountSlice"
 import { connect } from "react-redux";
 import store from "./../../redux/store"
 import { fetchBalance } from "../../redux/balance/balanceSlice";
 
-const Balance = (props: any) => {
+const _ = require("lodash");
 
-    const dispatch = useAppDispatch();
+const Balance = (props: any) => {
 
     const accountKey = store.getState().account.accounts[0].accountKey;
     
@@ -24,16 +23,9 @@ const Balance = (props: any) => {
     };
 
     const addFunds = () => {
-        dispatch(putNewBalance(amount + props.balance.cashBalance, accountKey));
+        props.dispatch(putNewBalance(amount + props.balance.cashBalance, accountKey));
         handleToggleBalance();
     };
-
-    const currentBalance = (
-        <>
-            <h3 className="font-bold">Balance:</h3>
-            <h3 className="text-sm">{props.balance.cashBalance} {props.balance.currency}</h3>
-        </>
-    );
 
     const balanceInput = (
         <>
@@ -50,7 +42,8 @@ const Balance = (props: any) => {
     
     return (
         <>
-            {currentBalance}
+            <h3 className="font-bold">Balance:</h3>
+            <h3 className="text-sm">{props.balance.cashBalance} {props.balance.currency}</h3>
             <button onClick={handleToggleBalance} className="inline-flex justify-center rounded-md my-1 text-lg text-white font-semibold py-3 px-4 bg-sky-900 hover:bg-slate-700">Add funds</button>
             {toggleBalanceInput ? balanceInput : <></>}
         </>
