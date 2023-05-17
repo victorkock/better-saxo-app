@@ -10,7 +10,6 @@ const Login = (props: any) => {
     const login = () => {
         dispatch(authorize(""));
         localStorage.setItem('loggedIn', 'true')
-
     };
 
     return props.isAuthorized 

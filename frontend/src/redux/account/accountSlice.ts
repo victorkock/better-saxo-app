@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { FetchAPIClient } from "./../../api/Client"
 import { AppDispatch } from '../store';
 import Account from '../../components/account/AccountList';
+import { fetchBalance } from '../balance/balanceSlice';
 
 // Include Lodash functions
 var _ = require("lodash");
@@ -12,6 +13,7 @@ const client = new FetchAPIClient();
 export interface Account {
   accountId: string
   accountKey: string
+  balance: number
 }
 
 // Define a type for the slice state
@@ -46,6 +48,15 @@ export const fetchAccounts = (): any => async (dispatch: AppDispatch) => {
       } as Account;
     });
     dispatch(setAccounts(accounts));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const putNewBalance = (amount: number, accountKey: string): any => async (dispatch: AppDispatch) => {
+  try {
+    await client.put<any>(`accounts/${accountKey}/reset`, {NewBalance: amount});
+    dispatch(fetchBalance())
   } catch (error) {
     console.error(error);
   }

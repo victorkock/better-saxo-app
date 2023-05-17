@@ -16,10 +16,6 @@ const AccountList = (props: any) => {
         </li>
     );
     
-    useEffect(() => {
-		dispatch(fetchAccounts())
-	}, [dispatch]);
-    console.log(props);
     return (
         <>
             <ul>{accountItems}</ul>
