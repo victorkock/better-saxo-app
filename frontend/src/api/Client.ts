@@ -1,6 +1,6 @@
-const baseUrl = 'https://gateway.saxobank.com/sim/openapi/port/v1/';
+const baseUrl = 'https://gateway.saxobank.com/sim/openapi/';
 
-type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
+type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'OPTIONS';
 
 // Define a function to set the Bearer token in the request headers
 const setHeaders = (token: string): RequestInit => {
@@ -8,7 +8,7 @@ const setHeaders = (token: string): RequestInit => {
     headers: {
       Authorization: `BEARER ${token}`,
       'Content-Type': 'application/json',
-      'Accept': '*/*',
+      'Accept': '*/*'
     },
   };
 };
@@ -50,5 +50,9 @@ export class FetchAPIClient {
 
   public put<T>(url: string, data: any): Promise<T> {
     return this.request<T>('PUT', url, data);
+  }
+
+  public options<T>(url: string): Promise<T> {
+    return this.request<T>('OPTIONS', url);
   }
 }
