@@ -23,6 +23,7 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state: UserState, action: PayloadAction<UserState>) => {
       return { 
+        ...state,
         userId: action.payload.userId,
         name: action.payload.name,
         clientKey: action.payload.clientKey,
@@ -33,11 +34,11 @@ export const userSlice = createSlice({
 
 export const fetchUser = (): any => async (dispatch: AppDispatch) => {
   try {
-    const response = await client.get<any>('users/me');
+    const response = await client.get<any>('port/v1/users/me');
     const user: UserState = {
       userId: response.UserId,
       name: response.Name,
-      clientKey: response.ClientId
+      clientKey: response.ClientKey
     };
     dispatch(setUser(user));
   } catch (error) {

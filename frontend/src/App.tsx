@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { Outlet, redirect } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from './components/navigation/Header';
 import { useAppDispatch } from "./redux/hooks";
 import { fetchUser } from "./redux/user/userSlice";
