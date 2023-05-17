@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
-import { Account, fetchAccounts, fetchAccountDetails } from "../../redux/account/accountSlice"
-import { AppDispatch } from "../../redux/store";
+import { Account, fetchAccountDetails } from "../../redux/account/accountSlice"
 
 const AccountOverview = (props: any) => {
     const [chosenAccount, setChosenAccount] = useState('')
     
-    useEffect(() => {
-		props.fetchAccounts()
-	}, [props]);
-
     const updateChosenAccount = (account: Account) => {
         if(account.accountId !== chosenAccount) {
-            props.fetchAccountDetails(account)
+            props.dispatch(fetchAccountDetails(account))
         }
         setChosenAccount(account.accountId === chosenAccount ? '' : account.accountId)
     }
@@ -55,11 +50,4 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-const mapDispatchToProps  = (dispatch: AppDispatch) => {
-    return {
-        fetchAccounts: () => dispatch(fetchAccounts()),
-        fetchAccountDetails: (account: Account) => dispatch(fetchAccountDetails(account))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AccountOverview);
+export default connect(mapStateToProps)(AccountOverview);
