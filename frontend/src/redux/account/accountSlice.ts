@@ -1,6 +1,7 @@
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 import { FetchAPIClient } from "./../../api/Client"
 import store, { AppDispatch } from '../store';
+import { fetchBalance } from '../balance/balanceSlice';
 
 // Create client
 const client = new FetchAPIClient();
@@ -8,6 +9,7 @@ const client = new FetchAPIClient();
 export interface Account {
   accountId: string
   accountKey: string
+  balance: number
 }
 
 export interface AccountDetails {
@@ -59,6 +61,15 @@ export const fetchAccounts = (): any => async (dispatch: AppDispatch) => {
       } as Account
     });
     dispatch(setAccounts(accounts));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const putNewBalance = (amount: number, accountKey: string): any => async (dispatch: AppDispatch) => {
+  try {
+    await client.put<any>(`port/v1/accounts/${accountKey}/reset`, {NewBalance: amount});
+    dispatch(fetchBalance())
   } catch (error) {
     console.error(error);
   }
