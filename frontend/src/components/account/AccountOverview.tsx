@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Account, fetchAccounts, fetchAccountDetails } from "../../redux/account/accountSlice"
-import { useAppDispatch } from "../../redux/hooks";
+import { AppDispatch } from "../../redux/store";
 
 const AccountOverview = (props: any) => {
     const [chosenAccount, setChosenAccount] = useState('')
-
-    const dispatch = useAppDispatch();
     
     useEffect(() => {
-		dispatch(fetchAccounts())
-	}, [dispatch]);
+		props.fetchAccounts()
+	}, [props]);
 
     const updateChosenAccount = (account: Account) => {
         if(account.accountId !== chosenAccount) {
-            dispatch(fetchAccountDetails(account))
+            props.fetchAccountDetails(account)
         }
         setChosenAccount(account.accountId === chosenAccount ? '' : account.accountId)
     }
@@ -31,7 +29,7 @@ const AccountOverview = (props: any) => {
                     </div>
                     <div className="text-xs text-slate-400">{account.accountKey}</div>
                     {chosenAccount === account.accountId && props.chosenAccount !== undefined
-                        ? <div className="rounded-md bg-white leading-6  shadow-xl shadow-black/5">
+                        ? <div className="rounded-md bg-white leading-6">
                             <div className="mt-4 font-medium leading-5">Balance</div>
                             <div className="mt-1 flex items-center justify-between border-t border-slate-400/20 py-2">
                                 <span className="">{props.chosenAccount.balance}</span>
@@ -57,4 +55,11 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps)(AccountOverview);
+const mapDispatchToProps  = (dispatch: AppDispatch) => {
+    return {
+        fetchAccounts: () => dispatch(fetchAccounts()),
+        fetchAccountDetails: (account: Account) => dispatch(fetchAccountDetails(account))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountOverview);
